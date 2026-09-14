@@ -67,7 +67,7 @@ describe("create_event", () => {
     expect(client.post).toHaveBeenCalledWith(
       "/athlete/0/events",
       expect.objectContaining({
-        start_date_local: "2024-06-30",
+        start_date_local: "2024-06-30T00:00:00",
         category: "WORKOUT",
         indoor: false,
       })
@@ -97,7 +97,7 @@ describe("create_event", () => {
     });
 
     expect(client.post).toHaveBeenCalledWith("/athlete/0/events", {
-      start_date_local: "2024-07-04",
+      start_date_local: "2024-07-04T00:00:00",
       name: "Independence Day Race",
       category: "RACE_A",
       type: "Run",
@@ -166,7 +166,7 @@ describe("update_event", () => {
     await updateEvent({ eventId: 7, movingTime: 5400, startDateLocal: "2024-08-01" });
 
     const body = vi.mocked(client.put).mock.calls[0][1] as Record<string, unknown>;
-    expect(body).toEqual({ moving_time: 5400, start_date_local: "2024-08-01" });
+    expect(body).toEqual({ moving_time: 5400, start_date_local: "2024-08-01T00:00:00" });
   });
 
   it("returns the API response as MCP content JSON", async () => {

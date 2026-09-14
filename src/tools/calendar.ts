@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { get, post, put, athleteId, withErrorHandling } from "../client.js";
-import { isoDate, jsonResult } from "../utils.js";
+import { isoDate, jsonResult, toLocalDateTime } from "../utils.js";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const EVENT_CATEGORIES = [
@@ -33,7 +33,7 @@ export async function createEvent(params: {
   indoor?: boolean;
 }) {
   const body: Record<string, unknown> = {
-    start_date_local: params.startDateLocal ?? isoDate(new Date()),
+    start_date_local: toLocalDateTime(params.startDateLocal ?? isoDate(new Date())),
     category: params.category ?? "WORKOUT",
     indoor: params.indoor ?? false,
   };
@@ -59,7 +59,7 @@ export async function updateEvent(params: {
   indoor?: boolean;
 }) {
   const body: Record<string, unknown> = {};
-  if (params.startDateLocal !== undefined) body.start_date_local = params.startDateLocal;
+  if (params.startDateLocal !== undefined) body.start_date_local = toLocalDateTime(params.startDateLocal);
   if (params.name !== undefined) body.name = params.name;
   if (params.category !== undefined) body.category = params.category;
   if (params.type !== undefined) body.type = params.type;

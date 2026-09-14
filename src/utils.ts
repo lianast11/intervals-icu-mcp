@@ -7,6 +7,10 @@ export function isoDate(d: Date): string {
   return d.toISOString().slice(0, 10);
 }
 
+export function toLocalDateTime(dateStr: string): string {
+  return dateStr.includes("T") ? dateStr : `${dateStr}T00:00:00`;
+}
+
 export function jsonResult(data: unknown): ToolResult {
   return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
 }
